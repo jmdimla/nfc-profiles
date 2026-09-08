@@ -1,9 +1,9 @@
 {
-    "business_name": "Aling Nena's Sari-Sari Store",
-    "tagline": "Sariwang paninda, tapat na presyo",
+    "business_name": "Nena's Corner Store",
+    "tagline": "Fresh goods, honest prices",
     "logo": "https://placehold.co/150x150?text=Logo",
     "phone": "0917 123 4567",
-    "email": "alingnena@example.com",
+    "email": "nenastore@example.com",
     "address": "123 Rizal St., Caloocan City",
     "google_maps_embed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.5!2d121.0!3d14.65!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDM5JzAwLjAiTiAxMjHCsDAwJzAwLjAiRQ!5e0!3m2!1sen!2sph!4v1234567890",
     "google_review_link": "https://g.page/r/example-review-link/review",
@@ -14,16 +14,16 @@
     },
     "services": [
         {
-            "name": "Load at Padala",
-            "description": "E-load, GCash padala, at bills payment"
+            "name": "Load & Remittance",
+            "description": "E-load, GCash padala, and bills payment"
         },
         {
             "name": "Grocery Items",
-            "description": "Kompletong tinda, bukas 6AM-9PM"
+            "description": "Full range of essentials, open 6AM-9PM"
         },
         {
-            "name": "Ulam at Snacks",
-            "description": "Homemade na putahe araw-araw"
+            "name": "Homecooked Meals",
+            "description": "Fresh dishes prepared daily"
         }
     ]
 }
