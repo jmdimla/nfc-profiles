@@ -1,24 +1,24 @@
 {
-    "business_name": "Nena's Corner Store",
-    "role": "Sari-Sari Store & Bills Payment Center",
-    "tagline": "Fresh goods, honest prices",
-    "logo": "https://placehold.co/150x150?text=Logo",
-    "phone": "0917 123 4567",
-    "email": "nenastore@example.com",
-    "address": "123 Rizal St., Caloocan City",
+    "business_name": "Jose Marie Dimla",
+    "role": "CEO",
+    "tagline": "",
+    "logo": "images/profile.jpg",
+    "phone": "0945 358 7036",
+    "email": "jmdimla003@gmail.com",
+    "address": "Libis Espina Caloocan City",
     "google_maps_embed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.5!2d121.0!3d14.65!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDM5JzAwLjAiTiAxMjHCsDAwJzAwLjAiRQ!5e0!3m2!1sen!2sph!4v1234567890",
     "google_review_link": "https://g.page/r/example-review-link/review",
     "social_links": {
-        "facebook": "https://facebook.com/example",
-        "instagram": "https://instagram.com/example",
-        "messenger": "https://m.me/example",
+        "facebook": "https://www.facebook.com/josemarie.dimla.3",
+        "instagram": "https://www.instagram.com/jm.dims/",
+        "messenger": "https://www.facebook.com/josemarie.dimla.3",
         "whatsapp": "https://wa.me/639171234567",
-        "tiktok": "https://tiktok.com/@example"
+        "tiktok": "https://www.tiktok.com/@userex3dq8zpvn"
     },
     "gallery": [
-        "https://placehold.co/200x150?text=Photo+1",
-        "https://placehold.co/200x150?text=Photo+2",
-        "https://placehold.co/200x150?text=Photo+3"
+        "images/fam.jpg",
+        "images/ed.jpg",
+        "images/edd.jpg"
     ],
     "services": [
         {
