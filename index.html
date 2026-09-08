@@ -161,7 +161,7 @@ function esc(str) {
     return div.innerHTML;
 }
 
-fetch(`data/${slug}.json`)
+fetch(`data/${slug}.json?t=${Date.now()}`, { cache: 'no-store' })
     .then(res => { if (!res.ok) throw new Error('not found'); return res.json(); })
     .then(renderProfile)
     .catch(() => {
