@@ -1,5 +1,6 @@
 {
     "business_name": "Nena's Corner Store",
+    "role": "Sari-Sari Store & Bills Payment Center",
     "tagline": "Fresh goods, honest prices",
     "logo": "https://placehold.co/150x150?text=Logo",
     "phone": "0917 123 4567",
@@ -10,8 +11,15 @@
     "social_links": {
         "facebook": "https://facebook.com/example",
         "instagram": "https://instagram.com/example",
-        "messenger": "https://m.me/example"
+        "messenger": "https://m.me/example",
+        "whatsapp": "https://wa.me/639171234567",
+        "tiktok": "https://tiktok.com/@example"
     },
+    "gallery": [
+        "https://placehold.co/200x150?text=Photo+1",
+        "https://placehold.co/200x150?text=Photo+2",
+        "https://placehold.co/200x150?text=Photo+3"
+    ],
     "services": [
         {
             "name": "Load & Remittance",

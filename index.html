@@ -5,160 +5,135 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Business Profile</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <style>
         :root {
-            --ink: #1B2A4A;
-            --ink-deep: #14213D;
-            --accent: #C9A24B;
-            --paper: #F7F6F3;
-            --line: #E4E1D9;
-            --muted: #7A7668;
+            --bg-deep: #06110E;
+            --bg-mid: #0C2620;
+            --mint: #3ED9A6;
+            --mint-soft: rgba(62, 217, 166, 0.16);
+            --paper: #F6F5F1;
+            --muted: rgba(246, 245, 241, 0.62);
         }
         * { box-sizing: border-box; }
-        body {
+        html, body {
             margin: 0;
+            min-height: 100vh;
             font-family: 'Inter', sans-serif;
-            background: var(--paper);
-            color: #2B2B2B;
+            background: var(--bg-deep);
+            color: var(--paper);
         }
-        .wrap { max-width: 460px; margin: 0 auto; padding-bottom: 3rem; }
+        body {
+            background:
+                radial-gradient(480px 380px at 15% 8%, rgba(62,217,166,0.20), transparent 60%),
+                radial-gradient(420px 360px at 90% 30%, rgba(62,217,166,0.12), transparent 65%),
+                linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 55%, var(--bg-deep) 100%);
+            background-attachment: fixed;
+        }
+        .wrap { max-width: 440px; margin: 0 auto; padding: 2.5rem 1.25rem 3rem; }
 
-        .cover {
-            height: 130px;
-            background: linear-gradient(135deg, var(--ink-deep) 0%, var(--ink) 55%, #3A4E7A 100%);
-            position: relative;
-        }
-        .avatar-wrap {
-            display: flex;
-            justify-content: center;
-            margin-top: -52px;
-        }
+        .avatar-wrap { display: flex; justify-content: center; margin-bottom: 1.1rem; }
         .avatar {
-            width: 104px;
-            height: 104px;
+            width: 96px; height: 96px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid var(--paper);
-            background: #fff;
+            border: 3px solid rgba(246,245,241,0.85);
         }
-        .identity {
-            text-align: center;
-            padding: 0.75rem 1.5rem 1.5rem;
-        }
+        .identity { text-align: center; margin-bottom: 1.6rem; }
         .identity h1 {
             font-family: 'Fraunces', serif;
             font-weight: 600;
-            font-size: 1.55rem;
-            margin: 0 0 0.2rem;
-            color: var(--ink-deep);
+            font-size: 1.5rem;
+            margin: 0 0 0.15rem;
         }
-        .identity p {
-            margin: 0;
-            color: var(--muted);
-            font-size: 0.95rem;
-        }
-
-        .actions {
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-            padding: 0 1.5rem 1.75rem;
-        }
-        .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            border-radius: 8px;
-            padding: 0.7rem 1rem;
+        .identity .role {
+            color: var(--mint);
+            font-size: 0.85rem;
             font-weight: 500;
-            font-size: 0.95rem;
+            margin: 0 0 0.3rem;
+        }
+        .identity .tagline { color: var(--muted); font-size: 0.9rem; margin: 0; }
+
+        .icon-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+            margin-bottom: 1.75rem;
+        }
+        .icon-badge {
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(246,245,241,0.08);
+            border: 1px solid rgba(246,245,241,0.14);
+            backdrop-filter: blur(6px);
+            color: var(--paper);
+            font-size: 1.15rem;
             text-decoration: none;
-            border: 1px solid transparent;
-            transition: opacity 0.15s ease;
+            transition: background 0.15s ease, transform 0.15s ease;
         }
-        .btn:active { opacity: 0.75; }
-        .btn-call {
-            background: var(--ink-deep);
-            color: #fff;
+        .icon-badge:active { transform: scale(0.94); background: var(--mint-soft); }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.75rem;
         }
-        .btn-outline {
-            background: transparent;
-            border-color: var(--line);
-            color: var(--ink-deep);
-        }
-        .btn-review {
-            background: var(--accent);
-            color: #fff;
+        .gallery img {
+            width: 100%; height: 92px;
+            object-fit: cover;
+            border-radius: 10px;
         }
 
-        section {
-            padding: 0 1.5rem 1.75rem;
-        }
+        section { margin-bottom: 1.75rem; }
         section h2 {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.82rem;
             font-weight: 600;
-            color: var(--ink-deep);
-            margin: 0 0 0.9rem;
+            color: var(--mint);
+            margin: 0 0 0.75rem;
         }
-
         .list-row {
             display: flex;
-            gap: 0.85rem;
-            padding: 0.85rem 0;
-            border-bottom: 1px solid var(--line);
+            gap: 0.75rem;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba(246,245,241,0.1);
+            font-size: 0.92rem;
         }
         .list-row:last-child { border-bottom: none; }
-        .list-row .icon {
-            color: var(--accent);
-            font-size: 1.1rem;
-            flex-shrink: 0;
-            width: 22px;
-            text-align: center;
-            padding-top: 0.1rem;
-        }
-        .list-row .name { font-weight: 600; color: var(--ink-deep); }
-        .list-row .desc { color: var(--muted); font-size: 0.9rem; margin-top: 0.1rem; }
+        .list-row .icon { color: var(--mint); width: 20px; text-align: center; }
+        .list-row .name { font-weight: 600; }
+        .list-row .desc { color: var(--muted); font-size: 0.85rem; margin-top: 0.1rem; }
 
-        .map-frame {
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid var(--line);
-        }
+        .map-frame { border-radius: 12px; overflow: hidden; border: 1px solid rgba(246,245,241,0.14); }
 
-        .socials {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            padding: 0.5rem 0 2rem;
-            font-size: 1.4rem;
+        .save-btn {
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            width: 100%;
+            background: var(--mint);
+            color: #06110E;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.85rem;
+            border-radius: 999px;
+            text-decoration: none;
+            border: none;
+            margin-top: 0.5rem;
         }
-        .socials a { color: var(--ink); }
+        .save-btn:active { opacity: 0.85; }
 
-        footer {
-            text-align: center;
-            color: var(--muted);
-            font-size: 0.78rem;
-            padding-top: 0.5rem;
-        }
+        footer { text-align: center; color: var(--muted); font-size: 0.75rem; margin-top: 2rem; }
 
         .state-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 60vh;
-            text-align: center;
-            padding: 2rem;
-            color: var(--muted);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 70vh; text-align: center; color: var(--muted);
         }
         .spinner {
-            width: 28px; height: 28px;
-            border: 3px solid var(--line);
-            border-top-color: var(--ink-deep);
+            width: 26px; height: 26px;
+            border: 3px solid rgba(246,245,241,0.2);
+            border-top-color: var(--mint);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin-bottom: 1rem;
@@ -192,13 +167,41 @@ fetch(`data/${slug}.json`)
     .catch(() => {
         container.innerHTML = `
             <div class="state-screen">
-                <h1 style="font-family:'Fraunces',serif;color:var(--ink-deep);font-size:2rem;">Not found</h1>
+                <h1 style="font-family:'Fraunces',serif;font-size:2rem;color:var(--paper);">Not found</h1>
                 <p>We couldn't find a profile for this link.</p>
             </div>`;
     });
 
+function makeVCard(data) {
+    const lines = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        `FN:${data.business_name || ''}`,
+        `TEL;TYPE=CELL:${data.phone || ''}`,
+        `EMAIL:${data.email || ''}`,
+        `ADR:;;${data.address || ''}`,
+        `NOTE:${data.tagline || ''}`,
+        'END:VCARD'
+    ];
+    return 'data:text/vcard;charset=utf-8,' + encodeURIComponent(lines.join('\n'));
+}
+
 function renderProfile(data) {
     document.title = data.business_name;
+
+    const icons = [];
+    if (data.phone) icons.push(`<a href="tel:${esc(data.phone)}" class="icon-badge"><i class="bi bi-telephone-fill"></i></a>`);
+    if (data.social_links?.messenger) icons.push(`<a href="${esc(data.social_links.messenger)}" class="icon-badge"><i class="bi bi-messenger"></i></a>`);
+    if (data.social_links?.whatsapp) icons.push(`<a href="${esc(data.social_links.whatsapp)}" class="icon-badge"><i class="bi bi-whatsapp"></i></a>`);
+    if (data.social_links?.facebook) icons.push(`<a href="${esc(data.social_links.facebook)}" class="icon-badge"><i class="bi bi-facebook"></i></a>`);
+    if (data.social_links?.instagram) icons.push(`<a href="${esc(data.social_links.instagram)}" class="icon-badge"><i class="bi bi-instagram"></i></a>`);
+    if (data.social_links?.tiktok) icons.push(`<a href="${esc(data.social_links.tiktok)}" class="icon-badge"><i class="bi bi-tiktok"></i></a>`);
+    if (data.google_review_link) icons.push(`<a href="${esc(data.google_review_link)}" class="icon-badge"><i class="bi bi-star-fill"></i></a>`);
+
+    const galleryHtml = (data.gallery && data.gallery.length) ? `
+        <div class="gallery">
+            ${data.gallery.slice(0, 3).map(src => `<img src="${esc(src)}" alt="">`).join('')}
+        </div>` : '';
 
     const services = (data.services || []).map(s => `
         <div class="list-row">
@@ -209,17 +212,9 @@ function renderProfile(data) {
             </div>
         </div>`).join('');
 
-    const messengerBtn = data.social_links?.messenger
-        ? `<a href="${esc(data.social_links.messenger)}" class="btn btn-outline"><i class="bi bi-messenger"></i>Message on Messenger</a>` : '';
-    const reviewBtn = data.google_review_link
-        ? `<a href="${esc(data.google_review_link)}" class="btn btn-review"><i class="bi bi-star-fill"></i>Leave a Google Review</a>` : '';
-    const fbIcon = data.social_links?.facebook
-        ? `<a href="${esc(data.social_links.facebook)}"><i class="bi bi-facebook"></i></a>` : '';
-    const igIcon = data.social_links?.instagram
-        ? `<a href="${esc(data.social_links.instagram)}"><i class="bi bi-instagram"></i></a>` : '';
-
     const mapsHtml = data.google_maps_embed ? `
         <section>
+            <h2>Location</h2>
             <div class="map-frame">
                 <div style="aspect-ratio:16/9;">
                     <iframe src="${esc(data.google_maps_embed)}" style="border:0;width:100%;height:100%;" allowfullscreen loading="lazy"></iframe>
@@ -228,38 +223,31 @@ function renderProfile(data) {
         </section>` : '';
 
     container.innerHTML = `
-        <div class="cover"></div>
-        <div class="avatar-wrap">
-            <img src="${esc(data.logo)}" alt="Logo" class="avatar">
-        </div>
+        <div class="avatar-wrap"><img src="${esc(data.logo)}" alt="Logo" class="avatar"></div>
         <div class="identity">
             <h1>${esc(data.business_name)}</h1>
-            <p>${esc(data.tagline)}</p>
+            ${data.role ? `<p class="role">${esc(data.role)}</p>` : ''}
+            <p class="tagline">${esc(data.tagline)}</p>
         </div>
 
-        <div class="actions">
-            <a href="tel:${esc(data.phone)}" class="btn btn-call"><i class="bi bi-telephone-fill"></i>Call ${esc(data.phone)}</a>
-            ${messengerBtn}
-            ${reviewBtn}
-        </div>
+        <div class="icon-row">${icons.join('')}</div>
+
+        ${galleryHtml}
 
         ${services ? `<section><h2>What We Offer</h2>${services}</section>` : ''}
 
         <section>
             <h2>Contact</h2>
-            <div class="list-row">
-                <div class="icon"><i class="bi bi-geo-alt-fill"></i></div>
-                <div class="name" style="font-weight:400;">${esc(data.address)}</div>
-            </div>
-            <div class="list-row">
-                <div class="icon"><i class="bi bi-envelope-fill"></i></div>
-                <div class="name" style="font-weight:400;">${esc(data.email)}</div>
-            </div>
+            <div class="list-row"><div class="icon"><i class="bi bi-geo-alt-fill"></i></div><div>${esc(data.address)}</div></div>
+            <div class="list-row"><div class="icon"><i class="bi bi-envelope-fill"></i></div><div>${esc(data.email)}</div></div>
         </section>
 
         ${mapsHtml}
 
-        <div class="socials">${fbIcon}${igIcon}</div>
+        <a href="${makeVCard(data)}" download="${esc(data.business_name)}.vcf" class="save-btn">
+            <i class="bi bi-person-plus-fill"></i> Save Contact
+        </a>
+
         <footer>Powered by Digital Profile Card</footer>
     `;
 }
