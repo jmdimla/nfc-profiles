@@ -16,9 +16,9 @@
         "tiktok": "https://www.tiktok.com/@userex3dq8zpvn"
     },
     "gallery": [
-        "images/fam.jpg",
-        "images/ed.jpg",
-        "images/edd.jpg"
+        "data/images/fam.jpg",
+        "data/images/ed.jpg",
+        "data/images/edd.jpg"
     ],
     "services": [
         {
