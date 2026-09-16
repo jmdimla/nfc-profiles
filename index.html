@@ -1,153 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Profile</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <style>
-        :root {
-            --bg-deep: #06110E;
-            --bg-mid: #0C2620;
-            --mint: #3ED9A6;
-            --mint-soft: rgba(62, 217, 166, 0.16);
-            --paper: #F6F5F1;
-            --muted: rgba(246, 245, 241, 0.62);
-        }
-        * { box-sizing: border-box; }
-        html, body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-deep);
-            color: var(--paper);
-        }
-        body {
-            background:
-                radial-gradient(480px 380px at 15% 8%, rgba(62,217,166,0.20), transparent 60%),
-                radial-gradient(420px 360px at 90% 30%, rgba(62,217,166,0.12), transparent 65%),
-                linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 55%, var(--bg-deep) 100%);
-            background-attachment: fixed;
-        }
-        .wrap { max-width: 440px; margin: 0 auto; padding: 2.5rem 1.25rem 3rem; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Profile Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<style>
+  :root{
+    --bg-deep:#060F0D;
+    --bg-mid:#0E2621;
+    --surface:rgba(245,243,238,0.05);
+    --surface-hi:rgba(245,243,238,0.09);
+    --border:rgba(245,243,238,0.10);
+    --mint:#3ED9A6;
+    --mint-dim:rgba(62,217,166,0.14);
+    --gold:#E8B96A;
+    --paper:#F5F3EE;
+    --muted:rgba(245,243,238,0.60);
+    --muted-2:rgba(245,243,238,0.38);
+    --radius-lg:18px;
+    --radius-md:14px;
+    --radius-sm:10px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;min-height:100vh;font-family:'Inter',sans-serif;background:var(--bg-deep);color:var(--paper);}
+  body{
+    background:
+      radial-gradient(520px 420px at 12% 4%, rgba(62,217,166,0.16), transparent 60%),
+      radial-gradient(460px 380px at 92% 22%, rgba(232,185,106,0.08), transparent 65%),
+      linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 55%, var(--bg-deep) 100%);
+    background-attachment:fixed;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:460px;margin:0 auto;padding:2.25rem 1.15rem 3rem;}
 
-        .avatar-wrap { display: flex; justify-content: center; margin-bottom: 1.1rem; }
-        .avatar {
-            width: 96px; height: 96px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid rgba(246,245,241,0.85);
-        }
-        .identity { text-align: center; margin-bottom: 1.6rem; }
-        .identity h1 {
-            font-family: 'Fraunces', serif;
-            font-weight: 600;
-            font-size: 1.5rem;
-            margin: 0 0 0.15rem;
-        }
-        .identity .role {
-            color: var(--mint);
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin: 0 0 0.3rem;
-        }
-        .identity .tagline { color: var(--muted); font-size: 0.9rem; margin: 0; }
+  /* ---------- identity ---------- */
+  .avatar-wrap{display:flex;justify-content:center;margin-bottom:1rem;}
+  .avatar-ring{
+    width:104px;height:104px;border-radius:50%;padding:3px;
+    background:conic-gradient(from 180deg, var(--mint), var(--gold), var(--mint));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .avatar-ring img, .avatar-ring .avatar-fallback{
+    width:100%;height:100%;border-radius:50%;object-fit:cover;
+    border:3px solid var(--bg-deep);
+  }
+  .avatar-fallback{
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(160deg, var(--bg-mid), var(--bg-deep));
+    font-family:'Fraunces',serif;font-size:2rem;font-weight:600;color:var(--mint);
+  }
 
-        .icon-row {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 0.65rem;
-            margin-bottom: 1.75rem;
-        }
-        .icon-badge {
-            width: 46px; height: 46px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            background: rgba(246,245,241,0.08);
-            border: 1px solid rgba(246,245,241,0.14);
-            backdrop-filter: blur(6px);
-            color: var(--paper);
-            font-size: 1.15rem;
-            text-decoration: none;
-            transition: background 0.15s ease, transform 0.15s ease;
-        }
-        .icon-badge:active { transform: scale(0.94); background: var(--mint-soft); }
+  .identity{text-align:center;margin-bottom:1.5rem;}
+  .identity .name-row{display:flex;align-items:center;justify-content:center;gap:0.4rem;}
+  .identity h1{font-family:'Fraunces',serif;font-weight:600;font-size:1.65rem;margin:0;line-height:1.15;}
+  .identity .verified{color:var(--mint);font-size:1.05rem;flex-shrink:0;}
+  .identity .role{color:var(--mint);font-size:0.82rem;font-weight:600;margin:0.35rem 0 0.3rem;letter-spacing:0.01em;}
+  .identity .tagline{color:var(--muted);font-size:0.92rem;margin:0;line-height:1.5;max-width:340px;margin-inline:auto;}
 
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
-            margin-bottom: 1.75rem;
-        }
-        .gallery img {
-            width: 100%; height: 92px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
+  /* ---------- primary CTA ---------- */
+  .save-btn{
+    display:flex;align-items:center;justify-content:center;gap:0.5rem;
+    width:100%;background:var(--mint);color:#06110E;font-weight:700;font-size:0.96rem;
+    padding:0.9rem;border-radius:999px;text-decoration:none;border:none;
+    box-shadow:0 8px 24px -8px rgba(62,217,166,0.45);
+    margin-bottom:0.9rem;
+  }
+  .save-btn:active{opacity:0.88;transform:scale(0.99);}
 
-        section { margin-bottom: 1.75rem; }
-        section h2 {
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: var(--mint);
-            margin: 0 0 0.75rem;
-        }
-        .list-row {
-            display: flex;
-            gap: 0.75rem;
-            padding: 0.7rem 0;
-            border-bottom: 1px solid rgba(246,245,241,0.1);
-            font-size: 0.92rem;
-        }
-        .list-row:last-child { border-bottom: none; }
-        .list-row .icon { color: var(--mint); width: 20px; text-align: center; }
-        .list-row .name { font-weight: 600; }
-        .list-row .desc { color: var(--muted); font-size: 0.85rem; margin-top: 0.1rem; }
+  /* ---------- quick actions ---------- */
+  .quick-actions{display:flex;justify-content:center;gap:0.55rem;flex-wrap:wrap;margin-bottom:2rem;}
+  .qa{
+    display:flex;flex-direction:column;align-items:center;gap:0.35rem;
+    text-decoration:none;color:var(--paper);width:64px;
+  }
+  .qa .qa-icon{
+    width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:var(--surface);border:1px solid var(--border);font-size:1.15rem;color:var(--mint);
+    transition:background 0.15s ease, transform 0.1s ease;
+  }
+  .qa:active .qa-icon{transform:scale(0.92);background:var(--mint-dim);}
+  .qa .qa-label{font-size:0.66rem;color:var(--muted);font-weight:500;text-align:center;}
 
-        .map-frame { border-radius: 12px; overflow: hidden; border: 1px solid rgba(246,245,241,0.14); }
+  /* ---------- generic section ---------- */
+  section{margin-bottom:1.9rem;}
+  section h2{
+    font-size:0.72rem;font-weight:700;color:var(--mint);margin:0 0 0.8rem;
+    text-transform:uppercase;letter-spacing:0.07em;
+  }
 
-        .save-btn {
-            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-            width: 100%;
-            background: var(--mint);
-            color: #06110E;
-            font-weight: 600;
-            font-size: 0.95rem;
-            padding: 0.85rem;
-            border-radius: 999px;
-            text-decoration: none;
-            border: none;
-            margin-top: 0.5rem;
-        }
-        .save-btn:active { opacity: 0.85; }
+  /* ---------- gallery ---------- */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;}
+  .gallery button{
+    padding:0;border:none;background:none;cursor:pointer;border-radius:var(--radius-sm);overflow:hidden;
+  }
+  .gallery img{width:100%;height:96px;object-fit:cover;display:block;border-radius:var(--radius-sm);
+    border:1px solid var(--border);}
 
-        footer { text-align: center; color: var(--muted); font-size: 0.75rem; margin-top: 2rem; }
+  /* ---------- lightbox ---------- */
+  .lightbox{
+    position:fixed;inset:0;background:rgba(4,10,9,0.92);display:none;
+    align-items:center;justify-content:center;z-index:50;padding:1.5rem;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:100%;max-height:80vh;border-radius:var(--radius-md);}
+  .lightbox-close{
+    position:absolute;top:1.25rem;right:1.25rem;width:38px;height:38px;border-radius:50%;
+    background:var(--surface);border:1px solid var(--border);color:var(--paper);font-size:1.1rem;
+  }
 
-        .state-screen {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            min-height: 70vh; text-align: center; color: var(--muted);
-        }
-        .spinner {
-            width: 26px; height: 26px;
-            border: 3px solid rgba(246,245,241,0.2);
-            border-top-color: var(--mint);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 1rem;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-    </style>
+  /* ---------- services ---------- */
+  .services-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;}
+  .service-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);
+    padding:0.9rem;
+  }
+  .service-card .icon{color:var(--mint);font-size:1.1rem;margin-bottom:0.55rem;display:block;}
+  .service-card .name{font-weight:600;font-size:0.88rem;margin-bottom:0.25rem;}
+  .service-card .desc{color:var(--muted);font-size:0.78rem;line-height:1.4;}
+
+  /* ---------- list rows (social + contact) ---------- */
+  .row-list{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;}
+  .row{
+    display:flex;align-items:center;gap:0.8rem;padding:0.85rem 1rem;
+    text-decoration:none;color:var(--paper);border-bottom:1px solid var(--border);
+  }
+  .row:last-child{border-bottom:none;}
+  a.row:active{background:var(--surface-hi);}
+  .row .row-icon{
+    width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    background:var(--mint-dim);color:var(--mint);font-size:0.95rem;
+  }
+  .row .row-body{flex:1;min-width:0;}
+  .row .row-label{font-size:0.7rem;color:var(--muted-2);margin-bottom:0.1rem;}
+  .row .row-value{font-size:0.9rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .row .row-go{color:var(--muted-2);font-size:0.85rem;flex-shrink:0;}
+
+  /* ---------- location ---------- */
+  .location-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);
+    padding:1.4rem 1rem;text-align:center;
+    background-image:
+      linear-gradient(rgba(62,217,166,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(62,217,166,0.05) 1px, transparent 1px);
+    background-size:18px 18px;
+  }
+  .location-card .pin{
+    width:42px;height:42px;border-radius:50%;background:var(--mint-dim);color:var(--mint);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 0.7rem;font-size:1.1rem;
+  }
+  .location-card .addr{font-weight:600;font-size:0.92rem;margin-bottom:0.25rem;}
+  .location-card .sub{color:var(--muted);font-size:0.8rem;margin-bottom:1rem;}
+  .directions-link{
+    display:inline-flex;align-items:center;gap:0.4rem;color:var(--mint);font-size:0.82rem;font-weight:600;
+    text-decoration:none;
+  }
+  .map-frame{margin-top:1rem;border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border);}
+
+  footer{text-align:center;margin-top:2.25rem;}
+  footer .brand{color:var(--muted);font-size:0.75rem;}
+  footer .brand a{color:var(--mint);text-decoration:none;font-weight:600;}
+
+  .state-screen{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    min-height:70vh;text-align:center;color:var(--muted);
+  }
+  .spinner{
+    width:26px;height:26px;border:3px solid rgba(245,243,238,0.18);border-top-color:var(--mint);
+    border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:1rem;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  @media (min-width:480px){
+    .wrap{padding-top:3rem;}
+  }
+</style>
 </head>
 <body>
 
 <div class="wrap" id="profile-container">
-    <div class="state-screen">
-        <div class="spinner"></div>
-        <p>Loading profile…</p>
-    </div>
+  <div class="state-screen">
+    <div class="spinner"></div>
+    <p>Loading profile…</p>
+  </div>
 </div>
 
 <script>
@@ -155,101 +192,202 @@ const params = new URLSearchParams(window.location.search);
 const slug = (params.get('slug') || 'sample-store').replace(/[^a-zA-Z0-9\-_]/g, '');
 const container = document.getElementById('profile-container');
 
-function esc(str) {
-    const div = document.createElement('div');
-    div.textContent = str || '';
-    return div.innerHTML;
+function esc(str){
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
+function initials(name){
+  if(!name) return '?';
+  return name.trim().split(/\s+/).slice(0,2).map(w => w[0]).join('').toUpperCase();
 }
 
 fetch(`data/${slug}.json?t=${Date.now()}`, { cache: 'no-store' })
-    .then(res => { if (!res.ok) throw new Error('not found'); return res.json(); })
-    .then(renderProfile)
-    .catch(() => {
-        container.innerHTML = `
-            <div class="state-screen">
-                <h1 style="font-family:'Fraunces',serif;font-size:2rem;color:var(--paper);">Not found</h1>
-                <p>We couldn't find a profile for this link.</p>
-            </div>`;
-    });
+  .then(res => { if (!res.ok) throw new Error('not found'); return res.json(); })
+  .then(renderProfile)
+  .catch(() => {
+    container.innerHTML = `
+      <div class="state-screen">
+        <h1 style="font-family:'Fraunces',serif;font-size:1.8rem;color:var(--paper);">Not found</h1>
+        <p>We couldn't find a profile for this link.</p>
+      </div>`;
+  });
 
-function makeVCard(data) {
-    const lines = [
-        'BEGIN:VCARD',
-        'VERSION:3.0',
-        `FN:${data.business_name || ''}`,
-        `TEL;TYPE=CELL:${data.phone || ''}`,
-        `EMAIL:${data.email || ''}`,
-        `ADR:;;${data.address || ''}`,
-        `NOTE:${data.tagline || ''}`,
-        'END:VCARD'
-    ];
-    return 'data:text/vcard;charset=utf-8,' + encodeURIComponent(lines.join('\n'));
+function makeVCard(data){
+  const lines = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    `FN:${data.business_name || ''}`,
+    `TITLE:${data.role || ''}`,
+    `TEL;TYPE=CELL:${data.phone || ''}`,
+    `EMAIL:${data.email || ''}`,
+    `ADR:;;${data.address || ''}`,
+    `NOTE:${data.tagline || ''}`,
+    'END:VCARD'
+  ];
+  return 'data:text/vcard;charset=utf-8,' + encodeURIComponent(lines.join('\n'));
 }
 
-function renderProfile(data) {
-    document.title = data.business_name;
+function mapsSearchLink(data){
+  if (data.google_maps_link) return data.google_maps_link;
+  if (data.address) return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.address)}`;
+  return null;
+}
 
-    const icons = [];
-    if (data.phone) icons.push(`<a href="tel:${esc(data.phone)}" class="icon-badge"><i class="bi bi-telephone-fill"></i></a>`);
-    if (data.social_links?.messenger) icons.push(`<a href="${esc(data.social_links.messenger)}" class="icon-badge"><i class="bi bi-messenger"></i></a>`);
-    if (data.social_links?.whatsapp) icons.push(`<a href="${esc(data.social_links.whatsapp)}" class="icon-badge"><i class="bi bi-whatsapp"></i></a>`);
-    if (data.social_links?.facebook) icons.push(`<a href="${esc(data.social_links.facebook)}" class="icon-badge"><i class="bi bi-facebook"></i></a>`);
-    if (data.social_links?.instagram) icons.push(`<a href="${esc(data.social_links.instagram)}" class="icon-badge"><i class="bi bi-instagram"></i></a>`);
-    if (data.social_links?.tiktok) icons.push(`<a href="${esc(data.social_links.tiktok)}" class="icon-badge"><i class="bi bi-tiktok"></i></a>`);
-    if (data.google_review_link) icons.push(`<a href="${esc(data.google_review_link)}" class="icon-badge"><i class="bi bi-star-fill"></i></a>`);
+function renderProfile(data){
+  document.title = data.business_name || 'Digital Profile Card';
 
-    const galleryHtml = (data.gallery && data.gallery.length) ? `
-        <div class="gallery">
-            ${data.gallery.slice(0, 3).map(src => `<img src="${esc(src)}" alt="">`).join('')}
-        </div>` : '';
+  const avatarHtml = data.logo
+    ? `<img src="${esc(data.logo)}" alt="${esc(data.business_name)}"
+         onerror="this.replaceWith(Object.assign(document.createElement('div'),
+           {className:'avatar-fallback', innerHTML:'${esc(initials(data.business_name))}'}))">`
+    : `<div class="avatar-fallback">${esc(initials(data.business_name))}</div>`;
 
-    const services = (data.services || []).map(s => `
-        <div class="list-row">
-            <div class="icon"><i class="bi bi-check2"></i></div>
-            <div>
-                <div class="name">${esc(s.name)}</div>
-                <div class="desc">${esc(s.description)}</div>
-            </div>
-        </div>`).join('');
+  const directions = mapsSearchLink(data);
 
-    const mapsHtml = data.google_maps_embed ? `
-        <section>
-            <h2>Location</h2>
-            <div class="map-frame">
-                <div style="aspect-ratio:16/9;">
-                    <iframe src="${esc(data.google_maps_embed)}" style="border:0;width:100%;height:100%;" allowfullscreen loading="lazy"></iframe>
-                </div>
-            </div>
-        </section>` : '';
+  // Quick actions: call, message, whatsapp, directions, review
+  const qa = [];
+  if (data.phone) qa.push({href:`tel:${data.phone}`, icon:'bi-telephone-fill', label:'Call'});
+  if (data.social_links?.messenger) qa.push({href:data.social_links.messenger, icon:'bi-messenger', label:'Message'});
+  if (data.social_links?.whatsapp) qa.push({href:data.social_links.whatsapp, icon:'bi-whatsapp', label:'WhatsApp'});
+  if (directions) qa.push({href:directions, icon:'bi-signpost-2-fill', label:'Directions'});
+  if (data.google_review_link) qa.push({href:data.google_review_link, icon:'bi-star-fill', label:'Review'});
+  const qaHtml = qa.map(a => `
+    <a href="${esc(a.href)}" class="qa" target="_blank" rel="noopener">
+      <span class="qa-icon"><i class="bi ${a.icon}"></i></span>
+      <span class="qa-label">${esc(a.label)}</span>
+    </a>`).join('');
 
-    container.innerHTML = `
-        <div class="avatar-wrap"><img src="${esc(data.logo)}" alt="Logo" class="avatar"></div>
-        <div class="identity">
-            <h1>${esc(data.business_name)}</h1>
-            ${data.role ? `<p class="role">${esc(data.role)}</p>` : ''}
-            <p class="tagline">${esc(data.tagline)}</p>
-        </div>
+  const galleryImgs = (data.gallery || []).slice(0, 6);
+  const galleryHtml = galleryImgs.length ? `
+    <section>
+      <h2>Gallery</h2>
+      <div class="gallery">
+        ${galleryImgs.slice(0,3).map((src,i) => `
+          <button type="button" onclick="openLightbox(${i})">
+            <img src="${esc(src)}" alt="">
+          </button>`).join('')}
+      </div>
+    </section>` : '';
 
-        <div class="icon-row">${icons.join('')}</div>
+  const services = (data.services || []).map(s => `
+    <div class="service-card">
+      <span class="icon"><i class="bi bi-check-circle-fill"></i></span>
+      <div class="name">${esc(s.name)}</div>
+      <div class="desc">${esc(s.description)}</div>
+    </div>`).join('');
 
-        ${galleryHtml}
+  const socialMeta = {
+    facebook:  {icon:'bi-facebook',  label:'Facebook'},
+    instagram: {icon:'bi-instagram', label:'Instagram'},
+    tiktok:    {icon:'bi-tiktok',    label:'TikTok'},
+    linkedin:  {icon:'bi-linkedin',  label:'LinkedIn'},
+    twitter:   {icon:'bi-twitter-x', label:'Twitter / X'},
+    dribbble:  {icon:'bi-dribbble',  label:'Dribbble'},
+    github:    {icon:'bi-github',    label:'GitHub'},
+  };
+  const socialRows = Object.entries(data.social_links || {})
+    .filter(([key]) => socialMeta[key])
+    .map(([key, url]) => `
+      <a class="row" href="${esc(url)}" target="_blank" rel="noopener">
+        <span class="row-icon"><i class="bi ${socialMeta[key].icon}"></i></span>
+        <span class="row-body">
+          <div class="row-label">${socialMeta[key].label}</div>
+          <div class="row-value">${esc(url.replace(/^https?:\/\//,''))}</div>
+        </span>
+        <span class="row-go"><i class="bi bi-box-arrow-up-right"></i></span>
+      </a>`).join('');
 
-        ${services ? `<section><h2>What We Offer</h2>${services}</section>` : ''}
+  const contactRows = `
+    ${data.email ? `
+      <a class="row" href="mailto:${esc(data.email)}">
+        <span class="row-icon"><i class="bi bi-envelope-fill"></i></span>
+        <span class="row-body">
+          <div class="row-label">Email</div>
+          <div class="row-value">${esc(data.email)}</div>
+        </span>
+        <span class="row-go"><i class="bi bi-box-arrow-up-right"></i></span>
+      </a>` : ''}
+    ${data.phone ? `
+      <a class="row" href="tel:${esc(data.phone)}">
+        <span class="row-icon"><i class="bi bi-telephone-fill"></i></span>
+        <span class="row-body">
+          <div class="row-label">Phone</div>
+          <div class="row-value">${esc(data.phone)}</div>
+        </span>
+        <span class="row-go"><i class="bi bi-box-arrow-up-right"></i></span>
+      </a>` : ''}
+  `;
 
-        <section>
-            <h2>Contact</h2>
-            <div class="list-row"><div class="icon"><i class="bi bi-geo-alt-fill"></i></div><div>${esc(data.address)}</div></div>
-            <div class="list-row"><div class="icon"><i class="bi bi-envelope-fill"></i></div><div>${esc(data.email)}</div></div>
-        </section>
+  const mapsEmbedHtml = data.google_maps_embed ? `
+    <div class="map-frame">
+      <div style="aspect-ratio:16/9;">
+        <iframe src="${esc(data.google_maps_embed)}" style="border:0;width:100%;height:100%;" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>` : '';
 
-        ${mapsHtml}
+  const locationHtml = (data.address || data.google_maps_embed) ? `
+    <section>
+      <h2>Location</h2>
+      <div class="location-card">
+        <div class="pin"><i class="bi bi-geo-alt-fill"></i></div>
+        ${data.address ? `<div class="addr">${esc(data.address)}</div>` : ''}
+        ${directions ? `<a class="directions-link" href="${esc(directions)}" target="_blank" rel="noopener">
+            Get directions <i class="bi bi-arrow-up-right"></i></a>` : ''}
+        ${mapsEmbedHtml}
+      </div>
+    </section>` : '';
 
-        <a href="${makeVCard(data)}" download="${esc(data.business_name)}.vcf" class="save-btn">
-            <i class="bi bi-person-plus-fill"></i> Save Contact
-        </a>
+  container.innerHTML = `
+    <div class="avatar-wrap"><div class="avatar-ring">${avatarHtml}</div></div>
+    <div class="identity">
+      <div class="name-row">
+        <h1>${esc(data.business_name)}</h1>
+        ${data.verified ? '<i class="bi bi-patch-check-fill verified" title="Verified by Tap & Co"></i>' : ''}
+      </div>
+      ${data.role ? `<p class="role">${esc(data.role)}</p>` : ''}
+      ${data.tagline ? `<p class="tagline">${esc(data.tagline)}</p>` : ''}
+    </div>
 
-        <footer>Powered by Digital Profile Card</footer>
-    `;
+    <a href="${makeVCard(data)}" download="${esc(data.business_name)}.vcf" class="save-btn">
+      <i class="bi bi-person-plus-fill"></i> Save Contact
+    </a>
+
+    ${qaHtml ? `<div class="quick-actions">${qaHtml}</div>` : ''}
+
+    ${galleryHtml}
+
+    ${services ? `<section><h2>What We Offer</h2><div class="services-grid">${services}</div></section>` : ''}
+
+    ${socialRows ? `<section><h2>Connect</h2><div class="row-list">${socialRows}</div></section>` : ''}
+
+    ${contactRows.trim() ? `<section><h2>Contact</h2><div class="row-list">${contactRows}</div></section>` : ''}
+
+    ${locationHtml}
+
+    <footer>
+      <p class="brand">Digital profile by <a href="https://www.facebook.com/tapandco" target="_blank" rel="noopener">Tap &amp; Co.</a></p>
+    </footer>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+      <button class="lightbox-close" onclick="closeLightbox(event)"><i class="bi bi-x-lg"></i></button>
+      <img id="lightbox-img" src="" alt="">
+    </div>
+  `;
+
+  window.__gallery = galleryImgs;
+}
+
+function openLightbox(i){
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = window.__gallery[i];
+  lb.classList.add('open');
+}
+function closeLightbox(e){
+  if (e.target.id === 'lightbox' || e.target.closest('.lightbox-close')) {
+    document.getElementById('lightbox').classList.remove('open');
+  }
 }
 </script>
 
