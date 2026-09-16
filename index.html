@@ -34,7 +34,7 @@
     background-attachment:fixed;
     -webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:460px;margin:0 auto;padding:2.25rem 1.15rem 3rem;}
+  .wrap{max-width:460px;margin:0 auto;padding:2.25rem 1.15rem 6.5rem;}
 
   /* ---------- identity ---------- */
   .avatar-wrap{display:flex;justify-content:center;margin-bottom:1rem;}
@@ -60,18 +60,34 @@
   .identity .role{color:var(--mint);font-size:0.82rem;font-weight:600;margin:0.35rem 0 0.3rem;letter-spacing:0.01em;}
   .identity .tagline{color:var(--muted);font-size:0.92rem;margin:0;line-height:1.5;max-width:340px;margin-inline:auto;}
 
-  /* ---------- primary CTA ---------- */
+  .hours-chip{
+    display:inline-flex;align-items:center;gap:0.45rem;
+    background:var(--surface);border:1px solid var(--border);border-radius:999px;
+    padding:0.35rem 0.75rem;margin-top:0.7rem;font-size:0.76rem;font-weight:600;color:var(--paper);
+  }
+  .hours-chip .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+  .hours-chip .dot.on{background:var(--mint);box-shadow:0 0 6px 1px rgba(62,217,166,0.6);}
+  .hours-chip .dot.off{background:rgba(245,243,238,0.35);}
+
+  /* ---------- primary CTA (fixed bottom bar) ---------- */
+  .sticky-cta{
+    position:fixed;left:0;right:0;bottom:0;z-index:40;
+    display:flex;justify-content:center;
+    padding:1.1rem 1.15rem calc(1.1rem + env(safe-area-inset-bottom));
+    background:linear-gradient(180deg, transparent, var(--bg-deep) 42%);
+    pointer-events:none;
+  }
+  .sticky-cta .save-btn{max-width:calc(460px - 2.3rem);pointer-events:auto;}
   .save-btn{
     display:flex;align-items:center;justify-content:center;gap:0.5rem;
     width:100%;background:var(--mint);color:#06110E;font-weight:700;font-size:0.96rem;
     padding:0.9rem;border-radius:999px;text-decoration:none;border:none;
     box-shadow:0 8px 24px -8px rgba(62,217,166,0.45);
-    margin-bottom:0.9rem;
   }
   .save-btn:active{opacity:0.88;transform:scale(0.99);}
 
   /* ---------- quick actions ---------- */
-  .quick-actions{display:flex;justify-content:center;gap:0.55rem;flex-wrap:wrap;margin-bottom:2rem;}
+  .quick-actions{display:flex;justify-content:center;gap:0.55rem;flex-wrap:wrap;margin-bottom:2rem;margin-top:1.5rem;}
   .qa{
     display:flex;flex-direction:column;align-items:center;gap:0.35rem;
     text-decoration:none;color:var(--paper);width:64px;
@@ -92,12 +108,17 @@
   }
 
   /* ---------- gallery ---------- */
-  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;}
+  .gallery{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;}
   .gallery button{
-    padding:0;border:none;background:none;cursor:pointer;border-radius:var(--radius-sm);overflow:hidden;
+    position:relative;padding:0;border:none;background:none;cursor:pointer;
+    border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--border);
   }
-  .gallery img{width:100%;height:96px;object-fit:cover;display:block;border-radius:var(--radius-sm);
-    border:1px solid var(--border);}
+  .gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;}
+  .gallery .cap{
+    position:absolute;left:0;right:0;bottom:0;padding:0.5rem 0.6rem 0.4rem;
+    background:linear-gradient(0deg, rgba(6,15,13,0.85), transparent);
+    color:var(--paper);font-size:0.72rem;font-weight:600;text-align:left;
+  }
 
   /* ---------- lightbox ---------- */
   .lightbox{
@@ -117,6 +138,8 @@
     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);
     padding:0.9rem;
   }
+  .service-card.span-full{grid-column:1 / -1;display:flex;align-items:flex-start;gap:0.7rem;}
+  .service-card.span-full .icon{margin-bottom:0;margin-top:0.1rem;}
   .service-card .icon{color:var(--mint);font-size:1.1rem;margin-bottom:0.55rem;display:block;}
   .service-card .name{font-weight:600;font-size:0.88rem;margin-bottom:0.25rem;}
   .service-card .desc{color:var(--muted);font-size:0.78rem;line-height:1.4;}
@@ -229,6 +252,48 @@ function makeVCard(data){
   return 'data:text/vcard;charset=utf-8,' + encodeURIComponent(lines.join('\n'));
 }
 
+function parseTimeToMinutes(str){
+  const m = str.trim().match(/(\d{1,2}):(\d{2})\s*([AP]M)/i);
+  if (!m) return null;
+  let h = parseInt(m[1], 10) % 12;
+  if (/PM/i.test(m[3])) h += 12;
+  return h * 60 + parseInt(m[2], 10);
+}
+
+function getTodayHoursStr(hours){
+  if (!hours) return null;
+  if (typeof hours === 'string') return hours;
+  const days = ['sun','mon','tue','wed','thu','fri','sat'];
+  return hours[days[new Date().getDay()]] || null;
+}
+
+// Reads data.hours — either a single string used every day ("6:00 AM - 9:00 PM"),
+// or an object keyed by sun/mon/tue/wed/thu/fri/sat, value "Closed" or a range string.
+// Status is computed from the visitor's device clock.
+function computeOpenStatus(data){
+  const todayStr = getTodayHoursStr(data.hours);
+  if (!todayStr) return null;
+  if (/closed/i.test(todayStr)) return { open: false, text: 'Closed today' };
+
+  const parts = todayStr.split(/[-–—]|(?:\bto\b)/i).map(s => s.trim()).filter(Boolean);
+  if (parts.length < 2) return { open: null, text: todayStr };
+
+  const openMin = parseTimeToMinutes(parts[0]);
+  const closeMin = parseTimeToMinutes(parts[1]);
+  if (openMin == null || closeMin == null) return { open: null, text: todayStr };
+
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const isOpen = closeMin > openMin
+    ? (nowMin >= openMin && nowMin < closeMin)
+    : (nowMin >= openMin || nowMin < closeMin); // overnight range
+
+  return {
+    open: isOpen,
+    text: isOpen ? `Open now · closes ${parts[1]}` : `Closed · opens ${parts[0]}`
+  };
+}
+
 function mapsSearchLink(data){
   if (data.google_maps_link) return data.google_maps_link;
   if (data.address) return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.address)}`;
@@ -245,6 +310,7 @@ function renderProfile(data){
     : `<div class="avatar-fallback">${esc(initials(data.business_name))}</div>`;
 
   const directions = mapsSearchLink(data);
+  const hoursStatus = computeOpenStatus(data);
 
   // Quick actions: call, message, whatsapp, directions, review
   const qa = [];
@@ -259,24 +325,33 @@ function renderProfile(data){
       <span class="qa-label">${esc(a.label)}</span>
     </a>`).join('');
 
-  const galleryImgs = (data.gallery || []).slice(0, 6);
-  const galleryHtml = galleryImgs.length ? `
+  const galleryItems = (data.gallery || [])
+    .map(g => typeof g === 'string' ? { src: g, caption: '' } : { src: g.src, caption: g.caption || '' })
+    .slice(0, 4); // keep it curated, not a dump
+  const galleryHtml = galleryItems.length ? `
     <section>
       <h2>Gallery</h2>
       <div class="gallery">
-        ${galleryImgs.slice(0,3).map((src,i) => `
+        ${galleryItems.map((item, i) => `
           <button type="button" onclick="openLightbox(${i})">
-            <img src="${esc(src)}" alt="">
+            <img src="${esc(item.src)}" alt="${esc(item.caption)}">
+            ${item.caption ? `<span class="cap">${esc(item.caption)}</span>` : ''}
           </button>`).join('')}
       </div>
     </section>` : '';
 
-  const services = (data.services || []).map(s => `
-    <div class="service-card">
+  const serviceList = data.services || [];
+  const services = serviceList.map((s, i) => {
+    const spanFull = (serviceList.length % 2 === 1) && (i === serviceList.length - 1);
+    return `
+    <div class="service-card${spanFull ? ' span-full' : ''}">
       <span class="icon"><i class="bi bi-check-circle-fill"></i></span>
-      <div class="name">${esc(s.name)}</div>
-      <div class="desc">${esc(s.description)}</div>
-    </div>`).join('');
+      <div>
+        <div class="name">${esc(s.name)}</div>
+        <div class="desc">${esc(s.description)}</div>
+      </div>
+    </div>`;
+  }).join('');
 
   const socialMeta = {
     facebook:  {icon:'bi-facebook',  label:'Facebook'},
@@ -348,21 +423,18 @@ function renderProfile(data){
       </div>
       ${data.role ? `<p class="role">${esc(data.role)}</p>` : ''}
       ${data.tagline ? `<p class="tagline">${esc(data.tagline)}</p>` : ''}
+      ${hoursStatus ? `<div class="hours-chip"><span class="dot ${hoursStatus.open === false ? 'off' : 'on'}"></span>${esc(hoursStatus.text)}</div>` : ''}
     </div>
 
-    <a href="${makeVCard(data)}" download="${esc(data.business_name)}.vcf" class="save-btn">
-      <i class="bi bi-person-plus-fill"></i> Save Contact
-    </a>
-
     ${qaHtml ? `<div class="quick-actions">${qaHtml}</div>` : ''}
-
-    ${galleryHtml}
-
-    ${services ? `<section><h2>What We Offer</h2><div class="services-grid">${services}</div></section>` : ''}
 
     ${socialRows ? `<section><h2>Connect</h2><div class="row-list">${socialRows}</div></section>` : ''}
 
     ${contactRows.trim() ? `<section><h2>Contact</h2><div class="row-list">${contactRows}</div></section>` : ''}
+
+    ${services ? `<section><h2>What We Offer</h2><div class="services-grid">${services}</div></section>` : ''}
+
+    ${galleryHtml}
 
     ${locationHtml}
 
@@ -373,15 +445,24 @@ function renderProfile(data){
     <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
       <button class="lightbox-close" onclick="closeLightbox(event)"><i class="bi bi-x-lg"></i></button>
       <img id="lightbox-img" src="" alt="">
+      <div id="lightbox-cap" style="position:absolute;bottom:2rem;left:0;right:0;text-align:center;color:var(--paper);font-size:0.85rem;"></div>
+    </div>
+
+    <div class="sticky-cta">
+      <a href="${makeVCard(data)}" download="${esc(data.business_name)}.vcf" class="save-btn">
+        <i class="bi bi-person-plus-fill"></i> Save Contact
+      </a>
     </div>
   `;
 
-  window.__gallery = galleryImgs;
+  window.__gallery = galleryItems;
 }
 
 function openLightbox(i){
   const lb = document.getElementById('lightbox');
-  document.getElementById('lightbox-img').src = window.__gallery[i];
+  const item = window.__gallery[i];
+  document.getElementById('lightbox-img').src = item.src;
+  document.getElementById('lightbox-cap').textContent = item.caption || '';
   lb.classList.add('open');
 }
 function closeLightbox(e){
